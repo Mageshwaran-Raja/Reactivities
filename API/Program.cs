@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(opt => 
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -45,8 +46,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options => options.WithOrigins("http://localhost:3000/").
+    AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
+
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
