@@ -1,7 +1,5 @@
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
 using Application.Activities;
 
 namespace API.Controllers {
@@ -23,7 +21,8 @@ namespace API.Controllers {
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditActivity(Guid id, Activity activity) {
+        public async Task<IActionResult> EditActivity(Guid id, Activity activity) 
+        {
             activity.Id = id;
             return Ok(await Mediator.Send(new Edit.Command {Activity = activity}));
         }
