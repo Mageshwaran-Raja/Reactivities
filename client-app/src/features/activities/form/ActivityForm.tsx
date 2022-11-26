@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
@@ -56,7 +56,7 @@ export default observer(function ActivityForm () {
                 <Form.Input placeholder='City' value={activity.city} name='city' onChange={onInputChange}/>
                 <Form.Input placeholder='Venue' value={activity.venue} name='venue' onChange={onInputChange}/>
                 <Button loading={loading} floated="right" positive type="submit" content='submit' />
-                <Button floated="right" type="button" content='cancel' />
+                <Button as={Link} to='/activities' floated="right" type="button" content='cancel' />
             </Form>
         </Segment>
     )
