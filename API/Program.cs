@@ -3,12 +3,18 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Core;
+using FluentValidation.AspNetCore;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config => 
+{
+    config.RegisterValidatorsFromAssemblyContaining<Create>();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,7 +33,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
 
-
+app.UseMiddleware<ExceptionMiddleware>();
 
 var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
